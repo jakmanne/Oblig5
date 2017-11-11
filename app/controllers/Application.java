@@ -3,13 +3,13 @@ package controllers;
 import play.*;
 import play.data.Form;
 import play.mvc.*;
-import Models.Bruker;
+import Models.User;
 
 import views.html.*;
 
 public class Application extends Controller {
 
-    //GET metode som lases når localhost9000 kalles. Definert i Routes mappen.
+    //GET metode som lastes når localhost9000 kalles. Definert i Routes mappen.
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }
@@ -19,7 +19,7 @@ public class Application extends Controller {
    public static Result addBar(){
 
        //Lager et bruker objekt fra requesten. DVS Når vi får inn JPA så oppretter vi en auksjon/bruker her.
-       Bruker bruker = Form.form(Bruker.class).bindFromRequest().get();
+       User bruker = Form.form(User.class).bindFromRequest().get();
        System.out.println(bruker.getNavn());
        return redirect(routes.Application.index());
    }
