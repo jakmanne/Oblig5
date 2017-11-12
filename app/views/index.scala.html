@@ -1,9 +1,37 @@
 @(message: String)
 
-@main("Welcome to Play") {
+<!-- Tittelen vi legg inn her vil bli satt som title på dei ulike sidene som lagast. -->
+@main(title = "Bidding") {
 
-    @play20.welcome(message.toUpperCase, style = "Java")
+    <!-- Her kan ein setje inn sidespesifikk html, som blir plassert der @@content står i main-malen -->
+    <p>Denne inputen vil sende med POST og så vise teksten på sida vi allereie er på.</p>
+    <form action ="@routes.Application.addBar()" method="post">
+        <input name="navn">
+        <input type="submit">
+    </form>
 
 
+    <!-- Det er her meldinga vil dukke opp når vi trykker på Send -->
+    <p>@message</p>
+
+    <br/>
+    <br/>
+
+
+    <p>Denne inputen vil sende POST til ein annan kontroller, og vise teksten på ei ny side.</p>
+    <form action ="@routes.Second.secondIndex()" method="post">
+        <input name="navn">
+        <input type="submit">
+    </form>
 
 }
+
+
+
+
+
+
+
+
+
+
