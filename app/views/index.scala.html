@@ -3,6 +3,8 @@
 <!-- Tittelen vi legg inn her vil bli satt som title på dei ulike sidene som lagast. -->
 @main(title = "Bidding") {
 
+    <h1>Welcome to the Admin Page of the bidding oblig</h1>
+
     <!-- Her kan ein setje inn sidespesifikk html, som blir plassert der @@content står i main-malen -->
     <p>Denne inputen vil sende med POST og så vise teksten på sida vi allereie er på.</p>
     <form action ="@routes.Application.addBar()" method="post">
@@ -13,6 +15,12 @@
 
     <!-- Det er her meldinga vil dukke opp når vi trykker på Send -->
     <p>@message</p>
+
+    <h2>Det tok @Application.getElapsedSeconds sekunder å kjøre denne spørringen</h2>
+    @for(name <- Application.getUsers) {
+        @name.getUsername , @name.getPassword, @name.getEmail
+        <br>
+    }
 
     <br/>
     <br/>

@@ -17,20 +17,20 @@ import views.html.*;
 
 public class Application extends Controller {
 
-    //GET metode som lastes når localhost9000 kalles. Definert i Routes mappen.
+
+    private static List<UserInstance> users;
+
+    public static  double elapsedSeconds;
+
     public static Result index() {
 
         databasetest();
-        return ok(index.render("ok"));
+        return ok(index.render("Liste Over alle brukere i databasen"));
     }
 
-     //POST metode som kalles fra viewet når jeg trykket på en knapp. Sender en redirect til viewet.
-    //Return brukes når man vil sende noe til en tilhørende controller. mens redirect er for å sende til et view et annet sted. (som regel).
    public static Result addBar(){
 
-       //Lager et bruker objekt fra requesten. DVS Når vi får inn JPA så oppretter vi en auksjon/bruker her.
-       //User bruker = Form.form(User.class).bindFromRequest().get();
-       //System.out.println(bruker.getNavn());
+
        return redirect(routes.Application.indexWithName("test"));
    }
 
@@ -43,25 +43,30 @@ public class Application extends Controller {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistenceUnit");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        System.out.println("test");
-
 
         Query query =  em.createNativeQuery("SELECT COUNT( * ) FROM UserInstance");
         String count = query.getSingleResult().toString();
-        System.out.println(count);
-
         //TypedQuery<UserInstance> query2 =  em.createQuery("SELECT  *  FROM UserInstance", UserInstance.class);
         //List<UserInstance> listen = query2.getResultList();
         //System.out.println(listen.isEmpty());
-
+        long tStart = System.currentTimeMillis();
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(UserInstance.class));
-        List<UserInstance> test = em.createQuery(cq).getResultList();
-        System.out.println(test.get(1).getUsername());
+        users = em.createQuery(cq).getResultList();
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        elapsedSeconds = tDelta / 1000.0;
 
         em.close();
         entityManagerFactory.close();
+    }
 
+    public static double getElapsedSeconds() {
+        return elapsedSeconds;
+    }
+
+    public static List<UserInstance> getUsers() {
+        return users;
     }
 
 
