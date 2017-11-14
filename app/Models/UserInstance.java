@@ -21,8 +21,9 @@ public class UserInstance implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String Username;
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    private String Username ="hahah";
+
     private String phone;
     private String name;
     private String email;

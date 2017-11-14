@@ -1,0 +1,17 @@
+@(message: String)
+
+@newuser("Auction") {
+
+    <p>@message</p>
+
+    <form action ="@routes.Newuser.createUser()" method="post">
+        Username<input name="username"><br>
+        Email<input name="email"><br>
+        Name<input name="name"><br>
+        Phone<input name="phone"><br>
+        Password<input name="password"><br>
+        <input type="submit">
+    </form>
+
+
+}

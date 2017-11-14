@@ -1,5 +1,7 @@
 package controllers;
 
+import Models.ProductInstance;
+import Models.UserInstance;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -13,6 +15,8 @@ public class Second extends Controller {
 
         return ok(second.render("test"));
     }
+
+
 
 
 }

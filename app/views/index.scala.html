@@ -3,42 +3,44 @@
 <!-- Tittelen vi legg inn her vil bli satt som title på dei ulike sidene som lagast. -->
 @main(title = "Bidding") {
 
-    <h1>Welcome to the Admin Page of the bidding oblig</h1>
 
-    <!-- Her kan ein setje inn sidespesifikk html, som blir plassert der @@content står i main-malen -->
-    <p>Denne inputen vil sende med POST og så vise teksten på sida vi allereie er på.</p>
-    <form action ="@routes.Application.addBar()" method="post">
-        <input name="navn">
-        <input type="submit">
-    </form>
+    <h1>Current products available for bidding</h1>
+    @for(product <- Application.getProducts) {
+        @if(product.isIsactive){
+            @product.getProductName - Current Bid:
+            @if(product.getCurrentBid==null){
+                0$
+            }else{
+                @product.getCurrentBid;
+            }
+            <br>
+        }
+    }
 
-
-    <!-- Det er her meldinga vil dukke opp når vi trykker på Send -->
-    <p>@message</p>
-
-    <h2>Det tok @Application.getElapsedSeconds sekunder å kjøre denne spørringen</h2>
     @for(name <- Application.getUsers) {
         @name.getUsername , @name.getPassword, @name.getEmail
         <br>
     }
 
-    <h2>Alle produkter i databasen</h2>
-    @for(product <- Application.getProducts) {
-        @product.getProductName;
-        <br>
-    }
-
-
-
     <br/>
     <br/>
-
 
     <p>Denne inputen vil sende POST til ein annan kontroller, og vise teksten på ei ny side.</p>
     <form action ="@routes.Second.secondIndex()" method="post">
         <input name="navn">
         <input type="submit">
     </form>
+
+        <!-- Her kan ein setje inn sidespesifikk html, som blir plassert der @@content står i main-malen -->
+    <p>Denne inputen vil sende med POST og så vise teksten på sida vi allereie er på.</p>
+    <form action ="@routes.Application.addBar()" method="post">
+        <input name="navn">
+        <input type="submit">
+    </form>
+
+        <!-- Det er her meldinga vil dukke opp når vi trykker på Send -->
+    <p>@message</p>
+
 
 }
 

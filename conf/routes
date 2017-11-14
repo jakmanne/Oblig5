@@ -12,6 +12,11 @@ GET     /indexWithName/:name        controllers.Application.indexWithName(name: 
 
 POST     /secondIndex/          controllers.Second.secondIndex()
 
+GET     /newuserindex/          controllers.Newuser.index()
+POST    /newuserindex/          controllers.Newuser.createUser()
+
+GET     /viewuserpageindex/      controllers.UserPage.viewuserpage()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
