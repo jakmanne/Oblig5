@@ -22,6 +22,14 @@
         <br>
     }
 
+    <h2>Alle produkter i databasen</h2>
+    @for(product <- Application.getProducts) {
+        @product.getProductName;
+        <br>
+    }
+
+
+
     <br/>
     <br/>
 

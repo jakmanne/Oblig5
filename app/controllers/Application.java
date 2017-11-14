@@ -1,5 +1,6 @@
 package controllers;
 
+import Models.ProductInstance;
 import Models.UserInstance;
 import play.data.Form;
 import play.mvc.*;
@@ -9,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
+
 
 
 import views.html.*;
@@ -19,6 +22,7 @@ public class Application extends Controller {
 
 
     private static List<UserInstance> users;
+    private static List<ProductInstance> products;
 
     public static  double elapsedSeconds;
 
@@ -46,16 +50,18 @@ public class Application extends Controller {
 
         Query query =  em.createNativeQuery("SELECT COUNT( * ) FROM UserInstance");
         String count = query.getSingleResult().toString();
-        //TypedQuery<UserInstance> query2 =  em.createQuery("SELECT  *  FROM UserInstance", UserInstance.class);
-        //List<UserInstance> listen = query2.getResultList();
-        //System.out.println(listen.isEmpty());
+
         long tStart = System.currentTimeMillis();
-        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(UserInstance.class));
-        users = em.createQuery(cq).getResultList();
+
+        users = em.createQuery("SELECT p FROM UserInstance p").getResultList();
+
+        products = em.createQuery("SELECT p FROM ProductInstance p").getResultList();
+
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         elapsedSeconds = tDelta / 1000.0;
+
+        List<UserInstance> listPersons = em.createQuery("SELECT p FROM UserInstance p").getResultList();
 
         em.close();
         entityManagerFactory.close();
@@ -67,6 +73,10 @@ public class Application extends Controller {
 
     public static List<UserInstance> getUsers() {
         return users;
+    }
+
+    public static List<ProductInstance> getProducts() {
+        return products;
     }
 
 
