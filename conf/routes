@@ -2,20 +2,28 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+
+GET     /login/                     controllers.Login.index()
+POST    /login/                     controllers.Login.login()
+
 # Home page
 GET     /                           controllers.Application.index
-POST    /bars                        controllers.Application.addBar()
+POST    /bars                       controllers.Application.addBar()
 
 
 GET     /indexWithName/:name        controllers.Application.indexWithName(name: String)
 
 
-POST     /secondIndex/          controllers.Second.secondIndex()
+POST     /secondIndex/              controllers.Second.secondIndex()
 
-GET     /newuserindex/          controllers.Newuser.index()
-POST    /newuserindex/          controllers.Newuser.createUser()
+GET     /newuserindex/              controllers.Newuser.index()
+POST    /newuserindex/              controllers.Newuser.createUser()
 
-GET     /viewuserpageindex/      controllers.UserPage.viewuserpage()
+GET     /viewuserpageindex/         controllers.UserPage.viewuserpage()
+
+GET     /newproductindex/           controllers.Newproduct.index()
+POST    /newproductindex/           controllers.Newproduct.createProduct()
+
 
 
 # Map static resources from the /public folder to the /assets URL path

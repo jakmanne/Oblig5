@@ -2,7 +2,67 @@
 
 @myuser("UserPage") {
 
-    <p>@message</p>
+    <h2>@message</h2>
+
+    <!-- Userprofile with rating and picture -->
+    <div id="personandstars">
+        <p id="mediumheaders"><strong>
+                <span> @UserPage.getUserinstance.getUsername</span>
+                [<span> <label> @UserPage.getUserinstance.getAverage</label> <f:convertNumber pattern="#0.00" /> </span>]
+        </strong></p>
+
+        <img id="sellerimg" src="@routes.Assets.at("images/seller.png")">
+        <img id="starsimg" src="@routes.Assets.at("images/stars.png")">
+
+        <div id="starratings">
+            <p><span>@UserPage.getUserinstance.getRatingAtIndex(5)</span> votes</p>
+            <p><span>@UserPage.getUserinstance.getRatingAtIndex(4)</span> votes</p>
+            <p><span>@UserPage.getUserinstance.getRatingAtIndex(3)</span> votes</p>
+            <p><span>@UserPage.getUserinstance.getRatingAtIndex(2)</span> votes</p>
+            <p><span>@UserPage.getUserinstance.getRatingAtIndex(1)</span> votes</p>
+        </div>
+    </div>
+
+        <!-- All bought product -->
+    <p id="ppheader"><strong> Purchased products </strong></p>
+
+    <!--<h:form>-->
+        @if(UserPage.getProductinstance != null){
+            @for(product <- UserPage.getProductinstance) {
+
+                <div id="purchasedproduct">
+                    <img id="boughtproductpic" src="@routes.Assets.at("images/whitebox.jpg")">
+                    <div id="sellerproductinfo">
+                        <p><strong><span>@product.getProductName</span></strong></p>
+                        <p>Bid: $<span>@product.getHighestbid</span></p>
+                        <p>Features: <span>@product.getFeatures</span></p>
+                        <p>Seller: <span>@product.getSellerName</span></p>
+                        <!--<p>Rate seller:
+                            <h:selectOneMenu id="mindropdown" class ="category" value ="#{searchHandler.userRating}">
+                                <f:selectItem itemValue="1" itemLabel="1 Stars" />
+                                <f:selectItem itemValue="2" itemLabel="2 Stars" />
+                                <f:selectItem itemValue="3" itemLabel="3 Stars" />
+                                <f:selectItem itemValue="4" itemLabel="4 Stars" />
+                                <f:selectItem itemValue="5" itemLabel="5 Stars" />
+                            </h:selectOneMenu>
+                            <h:commandButton value="Rate" action="#{searchHandler.postRating()}">
+                                <f:setPropertyActionListener target="#{searchHandler.searchForPerson}" value="#{products.seller}" />
+                            </h:commandButton>
+                            </p>-->
+                    </div>
+                </div>
+            }
+        }
+        @if(UserPage.getProductinstance == null) {
+            <p>This user have no purchased products... </p>
+        }
+    <!--</h:form> -->
+    }
 
 
-}
+
+
+
+
+
+

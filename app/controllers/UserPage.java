@@ -5,31 +5,33 @@ import Models.ProductInstance;
 import Models.UserInstance;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.createuser;
-import views.html.myuser;
+import views.html.login;
 import views.html.userpage;
+
 import java.util.List;
 
 public class UserPage extends Controller {
 
-    private static List<UserInstance> temp;
+    private static UserInstance userinstance;
+    private static List<ProductInstance> productinstance;
 
     public static Result viewuserpage() {
-
+        String user = session("username");
+        if(user == null) {
+            return ok(login.render("You need to log in"));
+        }
         Database DAO = new Database();
-        temp = DAO.getAllUsers();
+        userinstance = DAO.findUser(user);
+        productinstance = DAO.findProducts(user);
         return ok(userpage.render("Min brukerside"));
     }
-
-
-
-    public static List<UserInstance> getTemp() {
-        return temp;
+    public static UserInstance getUserinstance() {
+        return userinstance;
+    }
+    public static void setUserinstance(UserInstance userinstance) {
+        UserPage.userinstance = userinstance;
     }
 
-    public static void setTemp(List<UserInstance> temp) {
-        UserPage.temp = temp;
-    }
-
-
+    public static List<ProductInstance> getProductinstance() { return productinstance; }
+    public static void setProductinstance(List<ProductInstance> productinstance) { UserPage.productinstance = productinstance; }
 }

@@ -1,44 +1,41 @@
 package Models;
 
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
-/**
- *
- * @author Jakob
- * Entity class for productInstance.
- */
 @Entity
 public class ProductInstance implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @Column(name = "productid")
     private Long productId;
 
-    private String productName;
-    private String picture;
-    private String features;
+    private String category;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    //@Column(name = "databasetimestamp")
+    private Date databaseTimestamp;
+
+    private String features;
+    private boolean isactive;
+    private boolean ispurchased;
+    private String picture;
+
+    //@Column(name = "productname")
+    private String productName;
     //These are needed to create the web service.
     private int highestbid;
+   // @Column(name = "sellername")
     private String sellerName;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date databaseTimestamp;
 
     @OneToOne
     @JoinColumn(name = "bid_fk")
@@ -52,15 +49,15 @@ public class ProductInstance implements Serializable {
     @JoinColumn(name = "user_buyer_pk")
     private UserInstance buyer;
 
+    @Transient
+    private String time;
 
-    private boolean isactive;
-    private boolean ispurchased;
-    private String category;
+    public String getTime() {return time;}
+    public void setTime(String time) { this.time = time;}
 
     public Long getProductId() {
         return productId;
     }
-
     public void setProductId(Long productId) {
         this.productId = productId;
     }
@@ -68,7 +65,6 @@ public class ProductInstance implements Serializable {
     public String getProductName() {
         return productName;
     }
-
     public void setProductName(String productName) {
         this.productName = productName;
     }
@@ -76,20 +72,18 @@ public class ProductInstance implements Serializable {
     public UserInstance getSeller() {
         return seller;
     }
-
     public void setSeller(UserInstance seller) {
         this.seller = seller;
     }
 
-
     public BidInstance getCurrentBid() {
         return currentBid;
     }
+    public void setCurrentBid(BidInstance currentBid) { this.currentBid = currentBid; }
 
     public String getPicture() {
         return picture;
     }
-
     public void setPicture(String picture) {
         this.picture = picture;
     }
@@ -97,7 +91,6 @@ public class ProductInstance implements Serializable {
     public UserInstance getBuyer() {
         return buyer;
     }
-
     public void setBuyer(UserInstance buyer) {
         this.buyer = buyer;
     }
@@ -105,7 +98,6 @@ public class ProductInstance implements Serializable {
     public String getFeatures() {
         return features;
     }
-
     public void setFeatures(String features) {
         this.features = features;
     }
@@ -113,7 +105,6 @@ public class ProductInstance implements Serializable {
     public Date getTimestamp() {
         return timestamp;
     }
-
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
@@ -121,7 +112,6 @@ public class ProductInstance implements Serializable {
     public UserInstance getUser() {
         return seller;
     }
-
     public void setUser(UserInstance user) {
         this.seller = user;
     }
@@ -129,7 +119,6 @@ public class ProductInstance implements Serializable {
     public boolean isIsactive() {
         return isactive;
     }
-
     public void setIsactive(boolean isactive) {
         this.isactive = isactive;
     }
@@ -137,7 +126,6 @@ public class ProductInstance implements Serializable {
     public boolean isIspurchased() {
         return ispurchased;
     }
-
     public void setIspurchased(boolean ispurchased) {
         this.ispurchased = ispurchased;
     }
@@ -145,15 +133,13 @@ public class ProductInstance implements Serializable {
     public String getCategory() {
         return category;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }
 
     public String getSellerName() {
-        return sellerName;
+        return seller.getName();
     }
-
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
     }
@@ -161,54 +147,33 @@ public class ProductInstance implements Serializable {
     public Long getId() {
         return productId;
     }
-
     public void setId(Long id) {
         this.productId = id;
-    }
-
-    public void setCurrentBid(BidInstance currentBid) {
-        this.currentBid = currentBid;
     }
 
     public Date getDatabaseTimestamp() {
         return databaseTimestamp;
     }
-
     public void setDatabaseTimestamp(Date databaseTimestamp) {
         this.databaseTimestamp = databaseTimestamp;
     }
 
     public int getHighestbid() {
-        return highestbid;
+        if(getCurrentBid() == null )
+            return 0;
+        return getCurrentBid().getAmount();
     }
-
     public void setHighestbid(int highestbid) {
         this.highestbid = highestbid;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (productId != null ? productId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductInstance)) {
-            return false;
-        }
-        ProductInstance other = (ProductInstance) object;
-        if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "Entities.ProductHandler[ id=" + productId + " ]";
+        return "pruductname: " + productName + ", picture: " + picture +
+                ", features: " + features + ", Timestamp " +timestamp.toString() +
+                ", databasetimestamp: " + databaseTimestamp.toString() + ", User: " + seller.toString() +
+                ", isactive: " + isactive + " ispurchased: " + ispurchased + ", category: " +
+                category;
     }
 
 

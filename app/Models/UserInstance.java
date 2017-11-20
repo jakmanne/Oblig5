@@ -1,14 +1,11 @@
 package Models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  *
@@ -16,18 +13,20 @@ import javax.persistence.OneToMany;
  * Entity class for UserInstance.
  */
 @Entity
+@Table(name="userinstance")
 public class UserInstance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private String Username ="hahah";
+    @Column(name = "username")
+    private String Username;
 
     private String phone;
     private String name;
     private String email;
 
+    @Column(name = "password")
     private String Password;
     private int[] rating;
 
@@ -65,6 +64,31 @@ public class UserInstance implements Serializable {
     }
     public int[] getRating() {
         return rating;
+    }
+
+    public double getAverage() {
+        if(rating == null || rating.length == 0){
+            return 0.0;
+        }
+        double total = 0;
+        int count = 0;
+
+        for(int i =1; i<rating.length; i++){
+            total = total + rating[i]*i;
+            count = count + rating[i];
+        }
+
+        total = (double) total/count;
+        return total;
+    }
+    public int getRatingAtIndex(int i) {
+        if(i< 0 || i< 6) {
+            if(rating == null){
+                return 0 ;
+            }
+            return rating[i];
+        }
+        return 0;
     }
 
     public void setRating(int[] rating) {
@@ -135,7 +159,9 @@ public class UserInstance implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.User[ id=" + Username + " ]";
+        return  "navn: " + getName() +", tlf: " +
+                getPhone()+ ", passord: " + getPassword()
+                 + ", username: " + getUsername();
     }
 
 }
