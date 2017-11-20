@@ -26,7 +26,7 @@ public class Application extends Controller {
         }
         Database DAO = new Database();
         products = DAO.getAllProducts();
-        return ok(index.render("Place a Bid"));
+        return ok(index.render("Welcome"));
     }
 
    public static Result addBar(){

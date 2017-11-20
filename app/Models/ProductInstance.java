@@ -11,7 +11,6 @@ public class ProductInstance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "productid")
     private Long productId;

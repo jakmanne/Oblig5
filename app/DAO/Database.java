@@ -19,12 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.List;
+import java.util.Random;
 
 import static play.mvc.Controller.session;
 
 public class Database {
 
 
+    /**
+        Get all the user from the database
+     */
     @play.db.jpa.Transactional
     public List<UserInstance> getAllUsers(){
 
@@ -32,14 +36,16 @@ public class Database {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistenceUnit");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-
         temp = em.createQuery("SELECT p FROM UserInstance p").getResultList();
-
         em.close();
         entityManagerFactory.close();
         return temp;
     }
 
+    /**
+     *
+     * @return all product from the database
+     */
     @play.db.jpa.Transactional
     public List<ProductInstance> getAllProducts(){
 
@@ -64,8 +70,8 @@ public class Database {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        temp = em.createQuery("SELECT p FROM ProductInstance WHERE p.isactive like :isactive ")
-                .setParameter("isactive", true)
+        temp = ( List<ProductInstance>) em.createQuery("SELECT p FROM ProductInstance p WHERE p.isactive like :active ")
+                .setParameter("active", true)
                 .getResultList();
         System.out.println(temp.size());
 
@@ -80,21 +86,28 @@ public class Database {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         boolean userExcists = false;
-        List<UserInstance> temp = em.createQuery(
-                "SELECT p FROM UserInstance p where p.Username LIKE :name and p.Password like :password ")
-                .setParameter("name", logininstence.getUsername())
-                .setParameter("password", logininstence.getPassword())
-                .getResultList();
+        if(logininstence.getUsername().equals("")){
+            return false;
+        }
+        UserInstance user = em.find(UserInstance.class, logininstence.getUsername());
 
-        // check if user exists
-        if (temp.size() != 0){
-            System.out.println("Vi fant brukeren i systemet med antall brurkere: " + temp.size());
-            System.out.println("Brukerinfo: " + temp.get(0).toString());
+        if (user != null && user.getPassword().equals(logininstence.getPassword())){
+            System.out.println("Brukeren er funnet i systemet, + brukernavn og passord stemmer! ");
             userExcists = true;
         }
         else {
             System.out.println("Vi fant ikke brukeren i systemet");
         }
+       /* List<UserInstance> temp = em.createQuery(
+                "SELECT p FROM UserInstance p where p.Username LIKE :name and p.Password like :password ")
+                .setParameter("name", logininstence.getUsername()).setParameter("password", logininstence.getPassword()).getResultList();
+        // check if user exists
+        if (temp.size() != 0){
+            System.out.println("Vi fant brukeren i systemet med antall brurkere: " + temp.size());
+            System.out.println("Brukerinfo: " + temp.get(0).toString());
+            userExcists = true;
+        } */
+
         em.close();
         entityManagerFactory.close();
         return userExcists; // return if there exist an user or not
@@ -107,21 +120,13 @@ public class Database {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistenceUnit");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-
-        UserInstance temp;
-       if(username == null){
-           temp = em.find(UserInstance.class, "admin");
-       }else{
-           temp = em.find(UserInstance.class, username);
-       }
-
+        UserInstance temp = em.find(UserInstance.class, username);
         em.close();
         entityManagerFactory.close();
 
-        // check if it exists a
+        // check if it exists
         if (temp == null){
             System.out.println("Vi fant ikke brukeren i systemet, brukeren er ikke logget inn!!!");
-            return null;
         }
         return temp;
     }
@@ -132,18 +137,15 @@ public class Database {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        List<ProductInstance> temp = em.createQuery(
-                "SELECT p FROM ProductInstance as p, UserInstance as u WHERE u.Username LIKE :name AND p.buyer.Username LIKE u.Username")
-                .setParameter("name", username)
-                .getResultList();
+        List<ProductInstance> temp = em.find(UserInstance.class, username).getBoughtproducts();
 
         // check if user exists
         if (temp.size() != 0){
-            System.out.println("Vi fant brukeren i systemet med antall brurkere: " + temp.size());
-            System.out.println("Brukerinfo: " + temp.get(0).toString());
+            System.out.println("Vi fant brukeren i systemet med: " + temp.size() + " kjøpte produkter");
+            System.out.println("Produktifo på produkt 0: " + temp.get(0).toString());
         }
         else {
-            System.out.println("Vi fant ikke brukeren i systemet");
+            System.out.println("Vi fant ikke produktet i systemet");
         }
         em.close();
         entityManagerFactory.close();
@@ -155,7 +157,13 @@ public class Database {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistenceUnit");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-       // System.out.println(" Produktinfo" + product.toString() + "\n");
+        long generatedLong = new Random().nextLong();
+
+        // if the generated value already exist, generate a new one
+        if(em.find(ProductInstance.class, generatedLong) != null){
+            generatedLong = new Random().nextLong();
+        };
+        product.setId(generatedLong);
         em.persist(product);
         em.getTransaction().commit();
         System.out.println("\n\n It should have worked");
