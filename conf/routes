@@ -5,6 +5,7 @@
 
 GET     /login/                     controllers.Login.index()
 POST    /login/                     controllers.Login.login()
+POST    /login/                     controllers.Login.logout()
 
 # Home page
 GET     /                           controllers.Application.index

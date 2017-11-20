@@ -1,0 +1,47 @@
+@(message: String)
+
+@newproduct("Auction") {
+
+    <p>@message</p>
+
+    <form action ="@routes.Newproduct.createProduct()" method="post">
+
+        <div class="container">
+            <h1>Create new product</h1>
+            <div class="userinfo">
+                <label>Productname </label><input name="productName">
+            </div>
+            <div class="userinfo">
+                <label>Picture </label><input name="picture">
+            </div>
+
+            <div class="userinfo">
+        <label> Features </label><input name="features">
+            </div>
+
+            <div class="userinfo">
+                <label>Category</label><select name="category" class ="categoryNew" >
+
+                    <option value="Electronics"><label>Electronics</label></option>
+                    <option value="Fashion"><label>Fashion</label></option>
+                    <option value="Art"><label>Art</label></option>
+                    <option value="Sporting"><label>Sporting</label></option>
+                    <option value="Interior"><label>Interior</label></option>
+                    <option value="Motor"><label>Motor</label></option>
+                    <option value="Other"><label>Other</label></option>
+                </select>
+
+            </div>
+
+            <div class="userinfo">
+                <label> Biddingtime (Write single minutes):  </label>  <input name="time"><br>
+            </div>
+
+            <div class="btns_Form">
+                <input class="btnActive btnForm" id="productcreate"  type="submit">
+            </div>
+        </div>
+    </form>
+
+
+}
