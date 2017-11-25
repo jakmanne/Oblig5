@@ -1,11 +1,10 @@
 @(message: String)
 
-@newproduct("Auction") {
+@main("Auction") {
 
-    <p>@message</p>
+    <!--<p>@message</p>-->
 
     <form action ="@routes.Newproduct.createProduct()" method="post">
-
         <div class="container">
             <h1>Create new product</h1>
             <div class="userinfo">
@@ -14,14 +13,11 @@
             <div class="userinfo">
                 <label>Picture </label><input name="picture">
             </div>
-
             <div class="userinfo">
-        <label> Features </label><input name="features">
+                <label> Features </label><input name="features">
             </div>
-
             <div class="userinfo">
                 <label>Category</label><select name="category" class ="categoryNew" >
-
                     <option value="Electronics"><label>Electronics</label></option>
                     <option value="Fashion"><label>Fashion</label></option>
                     <option value="Art"><label>Art</label></option>
@@ -30,15 +26,12 @@
                     <option value="Motor"><label>Motor</label></option>
                     <option value="Other"><label>Other</label></option>
                 </select>
-
             </div>
-
             <div class="userinfo">
-                <label> Biddingtime (Write single minutes):  </label>  <input name="time"><br>
+                <label> Bidding time (Write single minutes):  </label>  <input name="time"><br>
             </div>
-
             <div class="btns_Form">
-                <input class="btnActive btnForm" id="productcreate"  type="submit">
+                <input class="btnActive btnForm" id="productcreate"  type="submit" value="Create new product">
             </div>
         </div>
     </form>

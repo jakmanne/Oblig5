@@ -43,23 +43,18 @@ public class Database {
     }
 
     /**
-     *
      * @return all product from the database
      */
     @play.db.jpa.Transactional
     public List<ProductInstance> getAllProducts(){
-
-        List<ProductInstance> temp;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("defaultPersistenceUnit");
+        EntityManagerFactory entityManagerFactory =
+                Persistence.createEntityManagerFactory("defaultPersistenceUnit");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-
-        temp = em.createQuery("SELECT p FROM ProductInstance p").getResultList();
-
+        List<ProductInstance> temp = em.createQuery("SELECT p FROM ProductInstance p").getResultList();
         em.close();
         entityManagerFactory.close();
         return temp;
-
     }
 
     @play.db.jpa.Transactional

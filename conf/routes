@@ -11,11 +11,7 @@ POST    /login/                     controllers.Login.logout()
 GET     /                           controllers.Application.index
 POST    /bars                       controllers.Application.addBar()
 
-
 GET     /indexWithName/:name        controllers.Application.indexWithName(name: String)
-
-
-POST     /secondIndex/              controllers.Second.secondIndex()
 
 GET     /newuserindex/              controllers.Newuser.index()
 POST    /newuserindex/              controllers.Newuser.createUser()
@@ -24,8 +20,6 @@ GET     /viewuserpageindex/         controllers.UserPage.viewuserpage()
 
 GET     /newproductindex/           controllers.Newproduct.index()
 POST    /newproductindex/           controllers.Newproduct.createProduct()
-
-
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

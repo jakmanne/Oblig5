@@ -19,13 +19,15 @@ public class Application extends Controller {
 
     public static Result index() {
 
-
+        // check if the user are logged in.
        String user = session("username");
         if(user == null) {
             return ok(login.render("You need to log in"));
         }
+        // get all products from the database
         Database DAO = new Database();
         products = DAO.getAllProducts();
+
         return ok(index.render("Welcome"));
     }
 

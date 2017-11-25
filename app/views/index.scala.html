@@ -1,33 +1,33 @@
 @(message: String)
 
-<!-- Tittelen vi legg inn her vil bli satt som title på dei ulike sidene som lagast. -->
 @main(title = "Bidding") {
-    <!-- Div som vil innehalde samling av alle produkt. -->
-    <h2>All availible products</h2>
-
+    <h2>All available products</h2>
     @if(Application.getProducts !=null){
-        @for(product <- Application.getProducts) {
-            <div id="itemsDiv">
-                <!--  <h:link id="produktboks" outcome="secured/placebid"> -->
-                <div class="item hover">
-                    <div class="venstre_boks">
-                        <div class="bilde">
-                           <!-- <link rel="logo" type="image/png" href="@routes.Assets.at("images/logo.png")">-->
-                            <img src="@routes.Assets.at("images/whitebox.jpg")">
 
+        @for(product <- Application.getProducts) {
+            @if(product.isIsactive){
+                <div id="itemsDiv">
+                    <!--  <h:link id="produktboks" outcome="secured/placebid"> -->
+                    <div class="item hover">
+                        <div class="venstre_boks">
+                            <div class="bilde">
+                               <!-- <link rel="logo" type="image/png" href="@routes.Assets.at("images/logo.png")">-->
+                                <img src="@routes.Assets.at("images/whitebox.jpg")">
+
+                            </div>
+                            <div class="info">
+                                <div class="title">@product.getProductName</div>
+                                <div class="description">@product.getFeatures</div>
+                            </div>
                         </div>
-                        <div class="info">
-                            <div class="title">@product.getProductName</div>
-                            <div class="description">@product.getFeatures</div>
+                        <div class="hogre_boks">
+                            <div class="bid">Highest bid:   @product.getHighestbid $</div>
                         </div>
                     </div>
-                    <div class="hogre_boks">
-                        <div class="bid">Highest bid:   @product.getHighestbid $</div>
-                    </div>
+                    <f:param name="newbid" value="products.getId"/>
+                    <!--  </h:link>-->
                 </div>
-                <f:param name="newbid" value="products.getId"/>
-                <!--  </h:link>-->
-            </div>
+            }
         }
     }
 

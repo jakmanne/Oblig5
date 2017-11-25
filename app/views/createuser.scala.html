@@ -1,31 +1,30 @@
 @(message: String)
 
-@newuser("Auction") {
-
-    <p>@message</p>
+@main("Auction") {
+   <!-- <p>@message</p>-->
 
     <div class="container">
         <h2>Create new user</h2>
-    <form action ="@routes.Newuser.createUser()" method="post">
-        <div class="userinfo">
-            <label> Username </label><input name="username"><br>
-        </div>
-        <div class="userinfo">
-            <label> Email </label><input name="email"><br>
-        </div>
-        <div class="userinfo">
-            <label> Name</label><input name="name"><br>
-        </div>
-        <div class="userinfo">
-            <label>Phone </label><input name="phone"><br>
-        </div>
-        <div class="userinfo">
-            <label>Password </label><input name="password"><br>
-        </div>
-        <div class="btns_Form">
-            <input class="btnActive btnForm"  type="submit">
-        </div>
-    </form>
+        <form action ="@routes.Newuser.createUser()" method="post">
+            <div class="userinfo">
+                <label> Username </label><input name="username"><br>
+            </div>
+            <div class="userinfo">
+                <label> Email </label><input name="email"><br>
+            </div>
+            <div class="userinfo">
+                <label> Name</label><input name="name"><br>
+            </div>
+            <div class="userinfo">
+                <label>Phone </label><input name="phone"><br>
+            </div>
+            <div class="userinfo">
+                <label>Password </label><input name="password"><br>
+            </div>
+            <div class="btns_Form">
+                <input class="btnActive btnForm"  value="Create new user"type="submit">
+            </div>
+        </form>
     </div>
 
 

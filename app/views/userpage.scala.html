@@ -1,13 +1,13 @@
 @(message: String)
 
-@myuser("UserPage") {
+@main("UserPage") {
 
-    <h2>@message</h2>
+    <h2>User page</h2>
 
     <!-- Userprofile with rating and picture -->
     <div id="personandstars">
         <p id="mediumheaders"><strong>
-                <span> @UserPage.getUserinstance.getUsername</span>
+                <span> @UserPage.getUserinstance.getName</span>
                 [<span> <label> @UserPage.getUserinstance.getAverage</label> <f:convertNumber pattern="#0.00" /> </span>]
         </strong></p>
 

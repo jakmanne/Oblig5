@@ -1,11 +1,9 @@
 @(message: String)
 
-@loginview("Welcome") {
-
-
+@main("Welcome") {
     <div class="container">
         <h2>User Login</h2>
-        <p>@message</p>
+      <br>
         <form action ="@routes.Login.login()" method="post">
             <div class="userinfo">
                 <label>Username</label> <input name="username"><br>
@@ -16,7 +14,10 @@
 
             <div class="btns_Form">
                 <input type="submit" class="btnActive btnForm" id="btnSignIn" value="Sign in">
+
             </div>
+
+           <p><a href="@routes.Newuser.index()">Create New User</a></p>
         </form>
     </div>
 
