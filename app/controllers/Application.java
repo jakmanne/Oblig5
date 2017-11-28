@@ -18,7 +18,6 @@ public class Application extends Controller {
     public static  double elapsedSeconds;
 
     public static Result index() {
-
         // check if the user are logged in.
        String user = session("username");
         if(user == null) {
@@ -27,7 +26,6 @@ public class Application extends Controller {
         // get all products from the database
         Database DAO = new Database();
         products = DAO.getAllProducts();
-
         return ok(index.render("Welcome"));
     }
 

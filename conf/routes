@@ -6,6 +6,7 @@
 GET     /login/                     controllers.Login.index()
 POST    /login/                     controllers.Login.login()
 POST    /login/                     controllers.Login.logout()
+POST    /login/                     controllers.Login.changeToEnglish()
 
 # Home page
 GET     /                           controllers.Application.index

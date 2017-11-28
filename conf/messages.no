@@ -1,0 +1,5 @@
+username    =       Brukernavn
+password    =       Passord
+title       =       Innlogging side
+newuser     =       Opprett ny bruker
+login       =       Login

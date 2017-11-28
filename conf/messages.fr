@@ -1,0 +1,5 @@
+username=Nom d'utilisateur
+password=Mot de passe
+title=Utilisateur en ligne
+newuser=Créer un nouvel utilisateur
+login=Se connecter
